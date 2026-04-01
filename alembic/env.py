@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 from logging.config import fileConfig
 
@@ -12,10 +11,9 @@ from sqlalchemy.engine.create import create_engine
 from app.db.base import Base
 
 import app.db.base_models
+from configs.settings import settings
 
-load_dotenv()
-
-url = os.getenv("DATABASE_URL")
+url = settings.database_url
 
 if not url:
     raise ValueError("DATABASE_URL is not set")
