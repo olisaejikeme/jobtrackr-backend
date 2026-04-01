@@ -1,3 +1,3 @@
-from datetime import datetime
-from sqlalchemy import Integer, String, ForeignKey, TIMESTAMP
-from sqlalchemy.orm import relationship
+from app.models.user import User
+from app.models.application import Application
+from app.models.resume import Resume

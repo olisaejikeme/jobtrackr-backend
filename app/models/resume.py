@@ -9,7 +9,7 @@ from app.db.base import Base
 class Resume(Base):
     __tablename__ = "resumes"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable=False)
 
@@ -17,7 +17,7 @@ class Resume(Base):
     file_path: Mapped[str] = mapped_column(String, nullable=False)
     version_label: Mapped[str] = mapped_column(String, nullable=True)
 
-    uploaded_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=True)
+    uploaded_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
 
     # Relationships
     user = relationship("User", back_populates="resumes")
