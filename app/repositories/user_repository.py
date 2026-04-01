@@ -9,12 +9,13 @@ class UserRepository:
     def get_by_email(self, db: Session, email: str):
         return db.query(User).filter(User.email == email).first()
 
-    def create(self, db: Session, name: str, email: str, password_hash: str):
+    def create(self, db: Session, name: str, email: str, password_hash: str, role_id: int):
         user = User(
             name=name,
             email=email,
             password_hash=password_hash,
-            status=UserStatus.ACTIVE
+            status=UserStatus.ACTIVE,
+            role_id=role_id
         )
         db.add(user)
         db.commit()
