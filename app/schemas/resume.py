@@ -14,6 +14,6 @@ class ResumeCreate(ResumeBase):
     pass
 
 
-class ResumeResponse(ResumeBase, ORMBaseModel):
+class ResumeResponse(ORMBaseModel):
     id: int
     uploaded_at: datetime
