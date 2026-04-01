@@ -6,7 +6,7 @@ from app.schemas.base_schema import ORMBaseModel
 
 
 # Base (shared fields)
-class ApplicationBase(BaseModel):
+class ApplicationBase(ORMBaseModel):
     company_name: str
     job_title: str
     location: str | None = None
@@ -34,5 +34,5 @@ class ApplicationUpdate(BaseModel):
     notes: str | None = None
 
 # Response (outgoing)
-class ApplicationResponse(ORMBaseModel):
+class ApplicationResponse(ApplicationBase):
     id: int
