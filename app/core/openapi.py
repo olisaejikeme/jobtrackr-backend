@@ -4,7 +4,7 @@ from configs.settings import settings
 
 def custom_openapi(app):
     """
-    Configures the OpenAPI schema for JobTrackr
+    Configures the OpenAPI schema for the FastAPI application.
     """
     def openapi():
         if app.openapi_schema:
@@ -12,14 +12,17 @@ def custom_openapi(app):
 
         # Generate default OpenAPI schema
         openapi_schema = get_openapi(
-            title=settings.app_name,
-            description="Application Job Tracking",
+            title="JobTrackr API",
             version="v1",
+            description="Job Application Tracking",
             routes=app.routes,
             servers=[{"url": "/", "description": "Default Server Url"}],
-            contact={"name": "Olisa Ejikeme",
-                     "email": "olisaejikeme@gmail.com"},
-            license_info={"name": "MIT License"},
+            contact={
+                 "name": "Olisa Ejikeme",
+                 "email": "olisaejikeme@gmail.com",
+                # "url": ""
+            },
+            license_info={"name": "MIT License", "url": "https://opensource.org/licenses/MIT"},
             terms_of_service="Terms of service",
             tags=[],
         )
@@ -28,17 +31,25 @@ def custom_openapi(app):
         if "components" not in openapi_schema:
             openapi_schema["components"] = {}
 
+        # Add custom security definitions
         openapi_schema["components"]["securitySchemes"] = {
-            "BearerAuth": {
+            "bearerAuth": {
                 "type": "http",
-                "description": "JWT Authentication",
                 "scheme": "bearer",
-                "bearerFormat": "JWT"
+                "bearerFormat": "JWT",
+                "description": "Jwt auth",
+                "in": "header",
             }
         }
-        openapi_schema["security"] = [{"BearerAuth": []}]
 
-        # prevent regeneration
+        # Apply security globally except for exempt routes
+        exempt_paths = ["/api/v1/auth/login", "/api/v1/auth/register"]
+
+        for path, methods in openapi_schema["paths"].items():
+            for operation in methods.values():
+                if path not in exempt_paths:
+                    operation["security"] = [{"bearerAuth": []}]
+
         app.openapi_schema = openapi_schema
         return app.openapi_schema
 
