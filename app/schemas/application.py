@@ -34,5 +34,5 @@ class ApplicationUpdate(BaseModel):
     notes: str | None = None
 
 # Response (outgoing)
-class ApplicationResponse(ApplicationBase, ORMBaseModel):
+class ApplicationResponse(ORMBaseModel):
     id: int
