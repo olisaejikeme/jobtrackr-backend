@@ -9,7 +9,7 @@ class UserCreate(BaseModel):
     password: str
 
 
-class UserResponse(BaseModel, ORMBaseModel):
+class UserResponse(ORMBaseModel):
     id: int
     name: str
     email: EmailStr
