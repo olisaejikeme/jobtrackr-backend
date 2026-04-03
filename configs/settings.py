@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     )
 
     # CORS
-    allowed_origins: List[str] = [""]
+    allowed_origins: List[str] = ["http://localhost:5173", "https://jobtrackr-frontend-tan.vercel.app"]
 
     app_name: str = "JobTrackr"
     environment: str = Field(default="development", alias="ENVIRONMENT")
