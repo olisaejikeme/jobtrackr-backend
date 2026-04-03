@@ -21,11 +21,11 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False, alias="DEBUG")
 
     # DB Settings
-    db_name: str = Field(..., alias="DB_NAME")
-    db_user: str = Field(..., alias="DB_USER")
-    db_password: str = Field(..., alias="DB_PASSWORD")
-    db_host: str = Field(..., alias="DB_HOST")
-    db_port: str = Field(..., alias="DB_PORT")
+    db_name: str = Field(default="postgres", alias="DB_NAME")
+    db_user: str = Field(default="postgres", alias="DB_USER")
+    db_password: str = Field(default="", alias="DB_PASSWORD")
+    db_host: str = Field(default="localhost", alias="DB_HOST")
+    db_port: str = Field(default="5432", alias="DB_PORT")
     database_url: str = Field(..., alias="DATABASE_URL")
 
     # Auth
