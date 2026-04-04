@@ -3,41 +3,47 @@ from app.enums.role_status import RoleStatus
 from app.models.role import Role
 from app.models.user import User
 from app.core.security import hash_password
+from configs.settings import settings  # Import your settings
+
 
 def seed():
     db = SessionLocal()
     try:
-        # Create roles
-        admin_role = db.query(Role).filter_by(name="ADMIN").first()
-        user_role = db.query(Role).filter_by(name="USER").first()
+        # Seed Roles
+        roles_to_create = ["ADMIN", "USER"]
+        role_objects = {}
 
-        if not admin_role:
-            admin_role = Role(name="ADMIN", status=RoleStatus.ACTIVE)
-            db.add(admin_role)
+        for role_name in roles_to_create:
+            role = db.query(Role).filter_by(name=role_name).first()
+            if not role:
+                role = Role(name=role_name, status=RoleStatus.ACTIVE)
+                db.add(role)
+                db.flush()
+            role_objects[role_name] = role
 
-        if not user_role:
-            user_role = Role(name="USER", status=RoleStatus.ACTIVE)
-            db.add(user_role)
+        # Seed Admin User from Environment Variables
+        admin_email = settings.admin_email
+        admin_password = settings.admin_password
+        admin_name = settings.admin_name
 
-        db.commit()
-
-        db.refresh(admin_role)
-        db.refresh(user_role)
-
-        # Create admin user
-        existing_admin = db.query(User).filter_by(email="admin@jobtrackr.com").first()
+        existing_admin = db.query(User).filter_by(email=admin_email).first()
 
         if not existing_admin:
             admin = User(
-                name="Admin",
-                email="admin@jobtrackr.com",
-                password_hash=hash_password("admin123"),
+                name=admin_name,
+                email=admin_email,
+                password_hash=hash_password(admin_password),
                 status="ACTIVE",
-                role_id=admin_role.id
+                role_id=role_objects["ADMIN"].id
             )
             db.add(admin)
-            db.commit()
 
+        db.commit()
+        print("Database seeded successfully!")
+
+    except Exception as e:
+        print(f"Error seeding database: {e}")
+        db.rollback()
     finally:
         db.close()
 

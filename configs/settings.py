@@ -31,7 +31,22 @@ class Settings(BaseSettings):
     # Auth
     secret_key: str = Field(..., alias="SECRET_KEY")
     access_token_expire_minutes: int = Field(..., alias="ACCESS_TOKEN_EXPIRE_MINUTES")
+    refresh_token_expire_days: int = Field(..., alias="REFRESH_TOKEN_EXPIRE_DAYS")
+    reset_password_expire_minutes: int = Field(..., alias="RESET_PASSWORD_EXPIRE_MINUTES")
     algorithm: str = Field(..., alias="ALGORITHM")
+
+    # File Storage
+    cloudinary_name: str = Field(..., alias="CLOUDINARY_NAME")
+    cloudinary_api_key: str = Field(..., alias="CLOUDINARY_API_KEY")
+    cloudinary_api_secret: str = Field(..., alias="CLOUDINARY_API_SECRET")
+
+    # Initial Admin Seed Data
+    admin_email: str = Field("admin@jobtrackr.com", alias="ADMIN_EMAIL")
+    admin_password: str = Field("admin_123", alias="ADMIN_PASSWORD")
+    admin_name: str = Field("System Admin", alias="ADMIN_NAME")
+
+    resend_api_key: str = Field(..., alias="RESEND_API_KEY")
+    frontend_url: str = Field("http://localhost:5173", alias="FRONT_END_URL")
 
 # Load settings
 settings = Settings()

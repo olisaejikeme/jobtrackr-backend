@@ -16,4 +16,6 @@ class ResumeCreate(ResumeBase):
 
 class ResumeResponse(ORMBaseModel):
     id: int
+    file_name: str
+    file_path: str
     uploaded_at: datetime

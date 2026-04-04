@@ -15,7 +15,8 @@ class ResumeRepository(BaseRepository):
             **data.model_dump()
         )
 
-        resume.created_by = user_id
+        if hasattr(resume, 'created_by'):
+            resume.created_by = user_id
 
         db.add(resume)
         db.commit()
