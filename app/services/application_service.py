@@ -44,7 +44,7 @@ class ApplicationService:
             # Upload to Cloudinary
             upload_result = cloudinary.uploader.upload(
                 file.file,
-                folder="resumes",
+                folder=f"jobtrackr/resumes/{user_id}",
                 resource_type="raw"
             )
 

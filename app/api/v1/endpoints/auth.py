@@ -44,21 +44,21 @@ async def forgot_password(
     return ResponseUtils.service_unavailable("This service is currently unavailable")
 
 
-@router.post("/auth/change-password")
+@router.post("/change-password")
 async def change_password(
         data: PasswordChange,
         current_user: User = Depends(get_current_user),
         db: Session = Depends(get_db)
 ):
     # Verify the current password matches what's in the DB
-    if not verify_password(data.current_password, current_user.hashed_password):
+    if not verify_password(data.current_password, current_user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The current password you entered is incorrect."
         )
 
     # Hash the new password and update the user object
-    current_user.hashed_password = get_password_hash(data.new_password)
+    current_user.password_hash = get_password_hash(data.new_password)
 
     # Save to database
     db.add(current_user)
