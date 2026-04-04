@@ -82,6 +82,15 @@ class ResponseUtils:
         ).model_dump(exclude_none=True)
 
     @staticmethod
+    def service_unavailable(message: str, data: T | None = None) -> ResponseSchema[T]:
+        return ResponseSchema(
+            message=message,
+            status=False,
+            status_code=HTTPStatus.SERVICE_UNAVAILABLE.value,
+            data=data
+        ).model_dump(exclude_none=True)
+
+    @staticmethod
     def error(message: str, status: HTTPStatus, data: T | None = None) -> ResponseSchema[T]:
         return ResponseSchema(
             message=message,

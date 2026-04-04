@@ -14,6 +14,7 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String, nullable=False)
     status: Mapped[str] = mapped_column(String, nullable=False)
     role_id: Mapped[int] = mapped_column(Integer, ForeignKey('roles.id'), nullable=False)
+    refresh_token: Mapped[str] = mapped_column(String, nullable=True)
 
     # Relationships
     role = relationship("Role", back_populates="users")
