@@ -13,3 +13,7 @@ class UserResponse(ORMBaseModel):
     id: int
     name: str
     email: EmailStr
+
+class UserUpdate(ORMBaseModel):
+    name: str
+    email: EmailStr
