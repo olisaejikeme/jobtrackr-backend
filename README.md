@@ -29,3 +29,6 @@ Backend service for managing job applications, resumes, and user authentication.
 * **Architecture:** Modular service and repository pattern.
 
 ---
+
+## License
+This project is proprietary and not licensed for commercial use.
